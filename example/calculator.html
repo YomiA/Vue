@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算器</title>
+    <script type="text/javascript" src="/assets/js/vue.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+    <div id="test">
+    简易计算器：<br />
+    <!--第一个输入框-->
+    <input type="text" id="num1" v-model="num1" placeholder="请输入数字">
+     <!--这是选择的运算符号-->
+    <select v-model="myselect" id="selected">
+        <option v-for="test in tests" :value="test.value">{{test.text}}</option>
+    </select>
+    <!--第二个输入框-->
+    <input type="text" id="num2" v-model="num2" placeholder="请输入数字" />
+    <!--这是结果-->
+    ={{count}}
+    <!--计算按钮-->
+    <button type="button" v-on:click="result()">计算</button>
+    </div>
+
+    <script type="text/javascript">
+        new Vue({
+            // 获取id
+            el:'#test',
+            // 在data中对各个值进行初始化和添加运算符号
+            data:{
+                count:0,
+                num1:'',
+                num2:'',
+                //默认值选择加号
+                myselect:'+',
+                tests:[
+                    {value:'+',text:'+'},
+                    {value:'-',text:'-'},
+                    {value:'*',text:'*'},
+                    {value:'/',text:'/'}
+                ]
+            },
+            methods:{
+                result:function () {
+                    //对符号进行判断然后再进行对应的运算操作，parseFloat是为了让string字符串类型转为float类型，也可以转为int类型
+                    if(this.myselect == '+') {
+                        this.count = parseFloat(this.num1) + parseFloat(this.num2);
+                    }else if(this.myselect == '-'){
+                        this.count = parseFloat(this.num1) - parseFloat(this.num2);
+                    }else if (this.myselect == '*'){
+                        this.count = parseFloat(this.num1) * parseFloat(this.num2);
+                    }else if(this.myselect == '/'){
+                        if (this.num2 == 0){
+                            //除法的除数不能为0
+                            alert("对不起，除数不能为0")
+                        }else {
+                            this.count = parseFloat(this.num1) / parseFloat(this.num2);
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+    <!--这是对界面进行修饰的CSS，看大家自己喜欢-->
+    <style>
+        #selected{
+            width: 50px;
+            height: 21px;
+        }
+    </style>
+</body>
+</html>

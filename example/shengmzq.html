@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue生命周期(钩子函数)</title>
+    <!--引入js文件-->
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+<div>Vue生命周期(钩子函数)</div>
+<hr />
+<div id="firstVue">
+    {{count}}
+    <p><button @click="add">Add</button></p>
+</div>
+<button onclick="add.$destroy()">销毁</button>
+
+<script type="text/javascript">
+    // 实例化对象
+    var add = new Vue({//放的是对象（后面一整个都是对象）
+        //el后面的元素要跟div上的对上
+        el:'#firstVue',
+        //data放参数的，也是一个对象
+        data:{
+            count:1
+        },
+        methods:{
+            add:function () {
+                this.count++;
+            }
+        },
+        beforeCreate:function(){
+            console.log('1-beforeCreate 初始化之前');
+        },
+        created:function(){
+            console.log('2-created 创建完成');
+        },
+        beforeMount:function(){
+            console.log('3-beforeMount 挂载之前');
+        },
+        mounted:function(){
+            console.log('4-mounted 挂载之后');
+        },
+        beforeUpdate:function(){
+            console.log('5-beforeUpdate 数据更新前');
+        },
+        updated:function(){
+            console.log('6-updated 被更新后');
+        },
+        activated:function(){
+            console.log('7-activated');
+        },
+        deactivated:function(){
+            console.log('8-deactivated');
+        },
+        beforeDestroy:function(){
+            console.log('9-beforeDestroy 销毁之前');
+        },
+        destroyed:function(){
+            console.log('10-destroyed 销毁之后')
+        }
+    });
+
+</script>
+</body>
+</html>

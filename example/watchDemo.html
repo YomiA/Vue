@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>watchDemo监听实例</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h2>watchDemo监听实例</h2>
+    <hr />
+    <h4>这是没有watch的正常模式</h4>
+    <div id="wth">
+        <p>温度：{{ temperature }}度</p>
+        <p>穿衣指南：{{ Dressing }}</p>
+        <button @click="add">升高温度</button>
+        <button @click="reduce">降低温度</button>
+    </div>
+    <hr />
+    <h4>这是有watch监听的模式</h4>
+    <div id="wth2">
+        <p>天气温度:{{ temp }}度</p>
+        <p>穿衣指南:{{ dress }}</p>
+        <button @click="plus">提升温度</button>
+        <button @click="decre">降低温度</button>
+    </div>
+    <script type="text/javascript">
+        new Vue({
+            el:"#wth",
+            data:{
+                temperature:10,
+                Dressing:"夹克长裙"
+            },
+            methods:{
+                add:function () {
+                    this.temperature = this.temperature + 5
+                    if (this.temperature > 26){
+                        this.Dressing = "T恤短袖";
+
+                        // 这里不能用0<this.temperature<26
+                    }else if (this.temperature < 26 && this.temperature > 0){
+                        this.Dressing = "夹克长裙";
+                    }else{
+                        this.Dressing = "羽绒服"
+                    }
+                },
+                reduce:function () {
+                    this.temperature = this.temperature - 5
+                    if (this.temperature > 26){
+                        this.Dressing = "T恤短袖";
+
+                        // 这里不能用0<this.temperature<26
+                    }else if (this.temperature < 26 && this.temperature > 0){
+                        this.Dressing = "夹克长裙";
+                    }else{
+                        this.Dressing = "羽绒服"
+                    }
+                }
+            }
+        })
+        //***********************************************************************
+        // 正常的话，我们获取的数据是从服务器传过来的，是以json形式，也就是数据形式传过来的，所以我们也把他写成一个数组
+        var dressArray=['T恤短袖','夹克长裙','羽绒服']
+        var watchDemo = new Vue({
+            el:"#wth2",
+            data:{
+                temp:10,
+                dress:"夹克长裙"
+            },
+            methods:{
+                plus:function () {
+                    this.temp = this.temp + 5
+                },
+                decre:function () {
+                    this.temp = this.temp - 5
+                }
+            },
+            //通过监控温度的升高降低来改变穿衣指数
+            // watch:{
+            //     //所以这个值应该是要监控的对象，也就是温度,传递的是一个匿名的方法，这个方法有两个值
+            //     //第一个是newVal(新的值)和oldVal(老的值)，所以可以通过监控新值和老值的变化来进行判断
+            //     temp:function (newVal,oldVal) {
+            //         if (newVal > 26){
+            //             // this.dress = "T恤短袖"
+            //              this.dress = dressArray[0]
+            //         }else if (newVal > 0 && newVal <26){
+            //             // this.dress = "夹克长裙"
+            //             this.dress = dressArray[1]
+            //         }else{
+            //             // this.dress = "羽绒服"
+            //             this.dress = dressArray[2]
+            //         }
+            //     }
+            // }
+        })
+
+        //第二种写法，叫实例写watch监控，写在构造器外部的,$watch接收两个值，一个是监控对象，一个就是函数function
+        watchDemo.$watch("temp",function (newVal,oldVal) {
+            if (newVal > 26){
+                // this.dress = "T恤短袖"
+                this.dress = dressArray[0]
+            }else if (newVal > 0 && newVal <26){
+                // this.dress = "夹克长裙"
+                this.dress = dressArray[1]
+            }else{
+                // this.dress = "羽绒服"
+                this.dress = dressArray[2]
+            }
+        })
+
+
+
+    </script>
+</body>
+</html>

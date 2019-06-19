@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>component组件的props属性实例</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div>component组件的props属性实例</div>
+    <div id="props_1">
+        <chendong here="实例" be-position="在厦门" v-bind:dta="message"></chendong>
+    </div>
+    <template id="tpl">
+        <!--{{here}}是以插值的形式插入到我们的模板当中-->
+        <p style="color:red;">这是<a style="color:green;">{{ bePosition }}</a>做的<a style="color:#8a2be2;">{{ dta }}</a>有关于component的props属性的测试<a style="color:#000;">{{ here }}</a></p>
+    </template>
+</body>
+<script type="text/javascript">
+    var props_1 = new Vue({
+        el:'#props_1',
+        //我们跟后台交互的数据，几乎都是放在data里面的，所以我们所要求的可能是要把data里面的数据绑定到属性上面去,所以就要用到指令了
+        data:{
+            message:'data'
+        },//data和component组件是同一级别
+        components:{
+            "chendong":{
+                template:"#tpl",
+                // props是一个数组，因为选项可能有很多，如果HTML中有横杠的写法，那么在vue中不能用横杠表示，要用驼峰表示如bePosition
+                props:['here','bePosition','dta']//这是一个数组，不是一个对象，因为属性是有很多种的
+            }
+        }
+    })
+</script>
+</html>

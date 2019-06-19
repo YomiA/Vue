@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        #cv{
+            /*border:1px solid;*/
+            position: absolute;
+            left:35px;
+            top:175px;
+        }
+        div{
+            width: 200px;
+            height: 100px;
+            font-size:30px;
+            line-height: 100px;
+            text-align: center;
+            position:absolute;
+            left:50px;
+            top:185px;
+        }
+        img{
+            width: 300px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+<img src="./cark.png">
+<div id="text"></div>
+<canvas id="cv" width="247" height="120"></canvas>
+</body>
+<script type="text/javascript">
+    //定义数组,在随机抽奖做准备
+    var arr =["谢谢惠顾","划水位一个","奶位一个","C位一个","划水位两个","划水位三个","划水位四个"];
+    var  index = parseInt(Math.random()*arr.length);
+    text.innerHTML=arr[index];
+    console.log(index);
+    var ctx = cv.getContext("2d");
+    ctx.beginPath();
+    //只有灰色区域是画布,红色的图片是添加到body中的
+    ctx.fillStyle="gray";
+    ctx.fillRect(0,0,250,120);
+    //显示源图像之外的目标图像,此刻灰色区域就是目标图像,在mousemove中绘制的圆为源图像
+    ctx.globalCompositeOperation="destination-out";
+    ctx.beginPath();
+    cv.onmousedown = function(e){
+        document.onmousemove = function(e){
+            console.log(222);
+            var e = e || window.event;
+            //e.clientX是获取的关于浏览器可视窗口的鼠标点坐标
+            //求关于灰色区域的鼠标点位置,就需要减去灰色区域的offsetLeft以及offsetTop
+            var x = e.clientX-cv.offsetLeft;
+            var y = e.clientY-cv.offsetTop;
+            ctx.moveTo(x,y);
+            console.log(x,y);
+            //绘制源图片,为圆形
+            ctx.arc(x,y,10,0,Math.PI*2,false);
+            ctx.fill();
+            //getImageData运行在服务器环境下:能得到一个对象,对象中的data属性存储了关于参数中的四个值,
+            //从哪里开始获取获取多大的图像的每个点的像素值,四个为一组,分别代表rgba
+            //获取每次移动的时候画布上面的所有像素点,当每第四个值为0时,就表示该像素点为透明,当所有判断
+            //透明度的值有百分之60之上,就清空画布,将刮奖区完全显示出来
+            var mydata = ctx.getImageData(0,0,cv.width,cv.height);
+            var data = mydata.data;
+            var count = 0;
+            for(var i=0;i<data.length;i+=4){
+                console.log(111);
+                var a = data[i+3];
+                if(a==0){
+                    count++;
+                    console.log(count);
+                }
+                if(count>=data.length/4*0.6){
+                    ctx.clearRect(0,0,cv.width,cv.height);
+                }
+            }
+        }
+    }
+
+</script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>methodsDemo实例</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="mtd">
+        <p>{{ a }}</p>
+        <!--无参-->
+        <button v-on:click="add">add</button>
+        <!--带有参数-->
+        <button v-on:click="add2(5)">带参数按钮</button>
+        <!--自定义按钮.native调用构造器里面的原始方法add-->
+        <btn @click.native="add2(2)"></btn>
+    </div>
+    <!--外部按钮，调用构造器里面的方法：使用构造器对象tmd-->
+    <button onclick="tmd.add2(3)">在外部的按钮</button>
+    <script type="text/javascript">
+        var btn = {
+            template:'<button>自定义按钮</button>'
+        }
+
+        var tmd = new Vue({
+            el:"#mtd",
+            data:{
+                a:1
+            },
+            components:{
+              btn:btn,
+            },
+            methods:{
+                add:function () {
+                    this.a = this.a + 1;
+                },
+                add2:function (num) {
+                    if (num != '') {
+                        this.a = this.a + num;
+                    }else {
+                        this.a = this.a + 1;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

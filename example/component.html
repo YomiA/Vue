@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>component组件</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div>初识Component组件</div>
+    <div id="component_1">
+        <chenxi>有效</chenxi>
+    </div>
+    <div id="component_2">
+        <chenxi>有效</chenxi>
+    </div>
+
+    <chenxi>没有效果</chenxi>
+
+    <template id="template_1">
+        <p>
+            这是我的第一个Component组件的实例，全局化注册组件
+        </p>
+    </template>
+</body>
+<script>
+    Vue.component('chenxi',{//全局注册组件是：不需要加s，但是这个在构造器外
+        template:"#template_1"
+    })
+    var template_1 = new Vue({
+        el:'#component_1',
+        data:{}
+    })
+
+    var template_2 = new Vue({
+        el:'#component_2',
+        data:{}
+    })
+
+</script>
+</html>

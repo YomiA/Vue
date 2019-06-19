@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.set引用构造器外部数据</title>
+    <!--引入js文件-->
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+<div>Vue.set引用构造器外部数据</div>
+<hr />
+<div id="firstVue">{{count}}-{{goods}}
+    <ul>
+        <li v-for="item in arr">{{item}}</li>
+    </ul>
+</div>
+<p><button onclick="add()">add</button>
+   <button onclick="del()">delete</button>
+   <button onclick="arr()">array</button>
+</p>
+<script type="text/javascript">
+    //定义一个函数
+    function add() {
+        // Vue.set()里面有三个参数，第一个是我们自己定义的数据outData，第二个是我们所要改变的值count，第三个是我们要给他加的值2
+        // Vue.set(outData,'count',2)
+        // 第二种方法（利用vueSet里面的属性count来弄，vueSet-->data-->outData-->count）
+        vueSet.count++;
+    }
+
+    function del() {
+        // 第三种方法直接利用outData属性count也可以
+        outData.count--;
+    }
+    //有时候我们操作的对象是数组的话，因为数组里面的数字位置产生变化，但是数组下标却不会变，这是因为JavaScript的一种限制，所以就产生了
+    //Vue.set来帮我们处理Vue中的数组位置的问题
+    function arr() {
+        //如果把vueSet.count++;注释掉，你会发现点击按钮没反应！这就是刚刚上边说的数组内容不会变.所以要用到Vue.set
+        // vueSet.count++;
+        // vueSet.arr[1]='ddd';
+        Vue.set(vueSet.arr,1,'dddd')
+    }
+
+    // 在外部定义一个数据，这是一个对象，所以要用{}
+    var outData ={
+        count:1,
+        goods:'泡面',
+        arr:['aaa','bbb','ccc']
+    }
+    
+    // 实例化对象（构造器）
+    var vueSet = new Vue({//放的是对象（后面一整个都是对象）
+        //el后面的元素要跟div上的对上
+        el:'#firstVue',
+        //data放参数的，也是一个对象
+        data:outData
+    });
+
+</script>
+</body>
+</html>

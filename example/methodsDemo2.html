@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>methodsDemo2</title>
+    <script type="text/javascript" src="../assets/js/vue.js">
+    </script>
+</head>
+<body>
+    <div id="mtd2">
+        <p>{{ num }}</p>
+        <button @click="add(5,$event)">add</button>
+        <button @click="add2($event.movementX,$event.movementY)">add2</button>
+    </div>
+    <script type="text/javascript">
+        var addNum = new Vue({
+            el:"#mtd2",
+            data:{
+                num:1,
+            },
+            methods:{
+                add:function (m,event) {
+                    this.num = this.num + m
+                    console.log(event)
+                },
+                add2:function (movementX,movementY) {
+                    console.log(movementX);
+                    console.log(movementY);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

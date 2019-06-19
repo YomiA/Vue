@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>exampleMethodsDemo</title>
+    <script type="text/javascript" src="../assets/js/vue.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ message }}
+    </div>
+    <script type="text/javascript">
+        var exampleMethods = new Vue({
+            el:"#app",
+            data:{
+                message:"Hello World!"
+            },
+            //Vue有一个生命周期为挂载(mounted)和更新(updated)
+            //在Vue中只有在挂载(mounted)和更新(updated)中才能用jquery，没有挂载(mounted)和更新(updated)是找不到dom
+            mounted:function () {
+                $("#app").html("我是Vue中使用的jQuery！");
+            },
+
+            methods:{
+                add:function () {
+                    console.log("在外部引用构造器内部的方法叫做实例！")
+                }
+            }
+        })
+
+        exampleMethods.add();//如果这句话能打印出add方法里面的内容则说明调用成功
+
+    </script>
+</body>
+</html>

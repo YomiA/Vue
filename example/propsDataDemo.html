@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>propsDataDemo</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h2>propsData 实例</h2>
+    <ppd></ppd>
+    <template id="tem_ppd">
+        <p>{{ message }}{{a}}</p>
+    </template>
+    <script type="text/javascript">
+        //声明一个对象，拓展里面也是一个对象
+        var ppd_a = Vue.extend({
+            template:"#tem_ppd",
+            //data不能直接写对象了，要用function的return方式返回一个对象
+            data:function () {
+                return{
+                    message:'Hello, I am the extend'
+                }
+            },
+            props:['a']
+        })
+        // propsData主要是用在扩展里
+        new ppd_a({propsData:{a: ' and propsData'}}).$mount("ppd");
+    </script>
+</body>
+</html>

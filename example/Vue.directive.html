@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.directive自定义指令</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>Vue.directive自定义指令</h1>
+    <div id="app">
+        <!--由之前的小例子，就是点击+1的那个小例子改装一下，使字体变红色，以下的v-chenxi是我自己定义的，内部指令是没有的，所以我们要定义v-chenxi-->
+        <div v-chenxi="color">{{ num }}</div>
+        <p>
+            <button v-on:click="add()">ADD</button>
+            <button v-on:click="del">Delete</button>
+        </p>
+    </div>
+    <script type="text/javascript">
+        // directive后面有两个参数，一个是我们自定义的不带v-的，一个是方法参数(这个方法参数里面又有3个参数，分别是el,binding,vnode)
+        Vue.directive("chenxi",function (el,binding) {
+        //el指的就是标签<div>10</div>,可以输出看看
+            console.log(el);
+        //binding其实是一个对象，并且这个对象里面有很多属性，可以输出看看
+            el.style = "color:"+binding.value;
+        //比如name，value，expression等等属性
+            console.log(binding);//{name: "chenxi", rawName: "v-chenxi", value: "red", expression: "color", modifiers: {…}, …}
+            console.log(binding.name);//chenxi
+            console.log(binding.value);//red
+            console.log(binding.expression);//color
+        })
+        var Dir = new Vue({
+            el:'#app',
+            data:{
+                num:10,
+                color:"red"
+            },
+            methods:{
+                add:function () {
+                    this.num++;
+                },
+                del:function () {
+                    this.num--;
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

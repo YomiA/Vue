@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>其他的vue指令(v-pre,v-cloak&v-once)</title>
+    <script type="text/javascript" src="/assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="ninthVue">
+        <div>{{ message }}</div>
+        <br/>
+        <!--v-pre是跳过vue的编译，直接输出原始值-->
+        <div v-pre>有v-pre:{{ message }}</div>
+        <br/>
+        <!--在vue渲染完指定的整个DOM后才进行显示。它必须和CSS样式一起使用，-->
+        <div v-cloak>有v-cloak:{{ message }}</div>
+        <br/>
+        <!--v-once是在第一次DOM时进行渲染，渲染完成后视为静态内容，跳出以后的渲染过程。就是只渲染第一次-->
+        <div v-once>有v-once:{{ message }}</div>
+        <br/>
+        <div><input type="text" v-model="message" /></div>
+        <br/>
+        <div>没有v-once:{{ message }}</div>
+    </div>
+    <script type="text/javascript">
+        var other = new Vue({
+            el:'#ninthVue',
+            data:{
+                message:'This is my ninth example'
+            }
+        })
+    </script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</body>
+</html>

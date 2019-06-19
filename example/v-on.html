@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>v-on实例</title>
+    <script type="text/javascript" src="/assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="fifthVue">
+        本场比赛得分:{{count}}
+        <p>
+            <button type="button" v-on:click="addPoints()">加分</button>
+            <button type="button" v-on:click="minusPoints()">减分</button>
+            <input type="text" v-on:keyup.enter="onEnter()" v-model="secondCount">
+        </p>
+    </div>
+        <script type="text/javascript">
+            var fifthVue = new Vue({
+                el:'#fifthVue',
+                data:{
+                    count:0,
+                    secondCount:1
+                },
+                methods:{
+                    addPoints:function () {
+                        //想要得到上面的参数，一定要加个this
+                        this.count++;
+                    },
+                    minusPoints:function () {
+                        if(this.count > 0) {
+                            this.count--;
+                        }else{
+                            alert("对不起，不能再减下去了！")
+                        }
+                    },
+                    onEnter:function () {
+                        this.count = this.count + parseInt(this.secondCount);
+                    }
+                }
+            })
+        </script>
+</body>
+</html>

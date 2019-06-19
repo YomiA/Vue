@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>component标签</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="component_5">
+        <!--这是Vue自己定义的一个标签，他能让我们根据动态的data来显示不同的我们声明的组件，v-bind:is这个是固定的-->
+        <component v-bind:is="what"></component>
+        <button v-on:click="changeComponent()">changeComponent</button>
+    </div>
+    <template id="componentA">
+        <p>This is componentA</p>
+    </template>
+    <template id="componentB">
+        <p>This is componentB</p>
+    </template>
+    <template id="componentC">
+        <p>This is componentC</p>
+    </template>
+
+    <script type="text/javascript">
+        //在外部声明几个组件
+        var componentA = {
+            template:'#componentA'
+        }
+
+        var componentB = {
+            template:'#componentB'
+        }
+
+        var componentC = {
+            template:'#componentC'
+        }
+
+
+        new Vue({
+            el:'#component_5',
+            data:{
+                what:'componentA'
+            },
+            //声明之后也要在这里挂载下:
+            components:{
+                "componentA":componentA,
+                "componentB":componentB,
+                "componentC":componentC
+            },
+            methods:{
+                changeComponent:function () {
+                    if (this.what == 'componentA'){
+                        this.what = 'componentB'
+                    }else if (this.what == 'componentB'){
+                        this.what = 'componentC'
+                    }else{
+                        this.what = 'componentA'
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

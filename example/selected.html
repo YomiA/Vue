@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue selected 实例</title>
+    <script type="text/javascript" src="/assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="test">
+        下拉列表select：
+        <select v-model="selected" v-on:click="clickMe()">
+            <option v-for="test in tests" v-bind:value="test.value">{{test.text}}</option>
+        </select>
+
+    </div>
+    <script type="text/javascript">
+        var select_test = new Vue({
+            el:'#test',
+            data:{
+                selected:'+',
+                tests:[
+                    {value:'+',text:'+'},
+                    {value:'-',text:'-'},
+                    {value:'*',text:'*'},
+                    {value:'/',text:'/'}
+                ]
+            },
+
+            methods:{
+                clickMe:function () {
+                    console.log(this.selected)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

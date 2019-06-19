@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-model双向数据源绑定</title>
+    <!--引入js文件-->
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+<div>v-model双向数据源绑定</div>
+<hr />
+<div id="seventhVue">
+    <p>原始数据:I am proud of {{message}} I like the World</p>
+    <h3>文本框</h3>
+    <p>
+        <!--v-model原本属性：-->
+        v-model:<input type="text" id="txt" v-model="message" />
+    </p>
+    <p>
+        <!--v-model的lazy修饰符，表示懒加载，当文本框里面的message鼠标失去焦点时，原始数据才会显示内容-->
+        v-model.lazy:<input type="text" id="txt1" v-model.lazy="message" />
+    </p>
+    <p>
+        <!--v-model的number修饰符，表示数字，message刚开始输入数字，后面就必需是数字，不然会消失掉，如果刚开始输入的是字符串，那么number就没效果了-->
+        v-model.number:<input type="text" id="txt2" v-model.number="message" />
+    </p>
+    <p>
+        <!--v-model的trim修饰符，表示去空格，当你输入的message字符串前后有空格的时候，会自动把空格去掉-->
+        v-model.trim:<input type="text" id="txt3" v-model.trim="message" />
+    </p>
+    <hr />
+    <h3>文本域</h3>
+    <textarea id="tta" v-model="message"></textarea>
+    <hr />
+    <h3>复选框绑定一个值</h3>
+    <!--v-model和id的值可以一样，也可以不一样，但是label for属性的值必需跟id一样，说明这个label是绑定在这个id上的-->
+    <input type="checkbox" id="ckb" v-model="box" />
+    <!--label的值必需是v-model里面的那个值-->
+    <label for="ckb">{{box}}</label>
+    <hr />
+    <h3>复选框绑定一个数组</h3>
+    <p>
+        <input type="checkbox" id="Tom" value="Tom" v-model="web_name" />
+        <label for="Tom">Tom</label>
+        <input type="checkbox" id="Kevin" value="Kevin" v-model="web_name" />
+        <label for="Kevin">Kevin</label>
+        <input type="checkbox" id="Sam" value="Sam" v-model="web_name" />
+        <label for="Sam">Sam</label>
+        <input type="checkbox" id="Jane" value="Jane" v-model="web_name" />
+        <label for="Jane">Jane</label>
+    </p>
+    <p>您选择的结果：{{ web_name }}</p>
+    <hr />
+    <h3>单选框绑定</h3>
+    <p>
+        <input type="radio" id="one" value="男" v-model="sex">
+        <label for="one">男</label>
+        <input type="radio" id="two" value="女" v-model="sex">
+        <label for="two">女</label>
+    </p>
+    <p>
+        您选择的性别是:{{ sex }}
+    </p>
+
+</div>
+
+<script type="text/javascript">
+    // 实例化对象
+    new Vue({//放的是对象（后面一整个都是对象）
+        //el后面的元素要跟div上的对上
+        el:'#seventhVue',
+        //data放参数的，也是一个对象
+        data:{
+            message:'Hello World!',
+            //设置默认值
+            box:true,
+            web_name:[],
+            sex:'女'
+        }
+    });
+
+</script>
+</body>
+</html>

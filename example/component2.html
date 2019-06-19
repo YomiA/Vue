@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>局部注册component组件</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div>局部注册component组件</div>
+    <div id="component_3">
+        <chenxi>有效果</chenxi>
+    </div>
+
+    <div id="component_4">
+        <chenxi>没有效果</chenxi>
+    </div>
+
+    <template id="template_3">
+        <h1>这是我第二个component组件，是局部注册的组件</h1>
+    </template>
+</body>
+<script>
+    var component_3 = new Vue({
+        el:'#component_3',
+        components:{//局部注册组件：component要加s，但是这个是在构造器里面
+            chenxi: {
+                template: '#template_3'
+            }
+        }
+    })
+</script>
+</html>

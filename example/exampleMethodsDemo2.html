@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>exampleMethodsDemo2</title>
+    <script type="text/javascript" src="../assets/js/vue.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <button onclick="destory()">销毁destory</button>
+    <script type="text/javascript">
+        var app = Vue.extend({
+            template:'<p>{{ message }}</p>',
+            data:function () {
+                return{
+                    message:'Welcome to learn'
+                }
+            },
+            destroyed:function () {
+                console.log("点击销毁按钮，我出现，说明已被销毁")
+            }
+        })
+
+        var Vm = new app().$mount("#app");
+
+        function destory() {
+            Vm.$destroy();
+        }
+
+    </script>
+</body>
+</html>

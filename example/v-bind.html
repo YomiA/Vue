@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind</title>
+    <!--引入js文件-->
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+<div>This is my eighth vue</div>
+<hr />
+<div id="eighthVue">
+    <h3>1、绑定属性(如src，href属性)</h3>
+    <p>这是正常的路径:<img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2895986097,3609514076&fm=173&app=25&f=JPEG?w=600&h=400&s=DBACB7475B8662D2062E5B6D0300E068" width="100px" /></p>
+    <p>这是v-bind的路径:<img v-bind:src="imgSrc" width="100px" /></p>
+    <a v-bind:href="aHref" target="_blank">百度一下，你就知道</a>
+    <hr />
+    <h3>2、绑定class</h3>
+    <div :class="className">学习使我快乐</div>
+    <hr />
+    <!--一般情况下v-bind我们都是拿来做判断用的，正确的时候显示红色字体，错误的时候显示黑色字体-->
+    <h3>3、绑定class的判断</h3>
+    <!--下面的大括号是什么意思-->
+    <div :class="{classA:isOk}">沉迷学习，无法自拔</div>
+    <hr />
+    <!--用v-model的CheckBox让他动起来-->
+    <h3>4、绑定class的判断2</h3>
+    <div :class="{classA:isRed}">好嗨哦，感觉人生已经到达了巅峰</div>
+    <div>
+        <!--被控制的那个判断isRed和v-model的值要一样的才能控制，不然控制不了-->
+        <input type="checkbox" id="ipt" value="ipt" v-model="isRed" />
+        <label for="ipt">{{isRed}}</label>
+    </div>
+    <hr />
+    <h3>5、绑定class中的数组</h3>
+    <div :class="[classA,classB]">清风扶杨柳，敢问是段友</div>
+    <hr />
+    <h3>6、绑定class中的三元运算符</h3>
+    <div :class="isRed?classA:classB">啤酒小龙虾，段友是一家</div>
+    <hr />
+    <h3>7、绑定div中的style</h3>
+    <div :style="{color:red,fontSize:font}">醉翁之意不在酒</div>
+    <hr />
+    <h3>8、对象绑定div中的style</h3>
+    <div :style="styleObject">采菊东篱下</div>
+</div>
+
+<style>
+    .classA{
+        color:red;
+    }
+
+    .classB{
+        color: green;
+        font-size: 20px;
+    }
+</style>
+
+<script type="text/javascript">
+    // 实例化对象
+    new Vue({//放的是对象（后面一整个都是对象）
+        //el后面的元素要跟div上的对上
+        el:'#eighthVue',
+        //data放参数的，也是一个对象
+        data:{
+            imgSrc:'https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2895986097,3609514076&fm=173&app=25&f=JPEG?w=600&h=400&s=DBACB7475B8662D2062E5B6D0300E068',
+            aHref:'https://www.baidu.com',
+            className:'classA',
+            //isOk为true的时候显示红色，为false的时候不显示，也就是黑色
+            isOk:false,
+            isRed:true,
+            classA:'classA',
+            classB:'classB',
+            isAB:true,
+            red:'blue',
+            font:'50px',
+            styleObject:{
+                color:'purple',
+                //这里不能用font-size，因为vue中不允许用这个格式，只能改成驼峰式
+                fontSize:'30px'
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

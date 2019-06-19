@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.extend实例构造器的延伸</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <!--经常是在构造器的外面拓展我们现在的构造器，所以用不到构造器，经常是和组件一起用-->
+    <h1>Vue.extend实例构造器的延伸</h1>
+    <hr />
+    <author></author>
+    <div id="game"></div>
+    <script type="text/javascript">
+    //先做一个构造器的延伸：(Vue.extend里面跟的是对象，跟构造器差不多)
+    var authorExtend = Vue.extend({
+        //要想这个有用，必须在构造器里面构造一个模板template(也就是你想表达的意思)
+        template:"<div><p><a target='_blank' :href='authorURL'>{{ authorName }}</a></p><p><a target='_self' :href='gameURL'>{{ gameName }}</a></p></div>",
+        //因为有模板，而且模板中有{{}}，所以我们给他个data，但是data不能直接写数值，必须给他一个方法，然后在方法中return一个对象，在对象里面写数值
+        data:function () {
+            //return一个对象{}
+            return{
+                isDNF:true,
+                authorName:"今天又是美好的一天",
+                //因为是属性，所以要用到v-bind
+                authorURL:"https://dnf.qq.com/",
+                gameName:"欢迎来到英雄联盟",
+                gameURL:"https://lol.qq.com/"
+            }
+        }
+    });
+    //所有的构造器都需要用这个东西把他里面的值给加载到我们需要的页面上面去
+    //$mount()括号里面可以是"#id",".class","标签名"
+    new authorExtend().$mount("author");
+    new authorExtend().$mount("#game");
+    </script>
+</body>
+</html>

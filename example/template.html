@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Template模板实例</title>
+    <script type="text/javascript" src="/assets/js/vue.js"></script>
+</head>
+<body>
+    <div>This is template 模板实例</div>
+    <div id="template_1">
+        {{ message }}
+    </div>
+    <template id="dd2">
+        <h4>这是template的第二种表现形式，标签模板</h4>
+    </template>
+</body>
+<script id="dd3" type="x-template">
+    <h3>这是template的第三种表现形式,script模板</h3>
+</script>
+<script>
+    var template = new Vue({
+        el:"#template_1",
+        data:{
+            message:'Template模板实例总共分为三个模板'
+        },
+        template:"#dd3"
+        // template:"#dd2"
+        // template:`<h1 id="dd1">template的第一种表现形式</h1>`
+    })
+</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>computed 改造数据的实例</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <h2>computed 改造数据的实例</h2>
+    <div id="ctd">
+        <!--这里输出的是newPrice，并不是原始数据price，所以原始数据没有被改变-->
+        <p>{{ newPrice }}</p>
+        <ul>
+            <!--利用循环输出给他输出来-->
+            <li v-for="item in reverseNews">{{ item.title }} - {{ item.Click }} - {{ item.date }}</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        //这是假数据，一般数据都是从数据库获取的，正常是以json形式的,我们目的是要倒叙输出如下数据
+        newList = [
+            {title:'无印良品饼干致癌',date:'2019/1/13',Click:'44W'},
+            {title:'加拿大网友挺中方',date:'2019/1/14',Click:'43W'},
+            {title:'男艺人节目禁耳钉',date:'2019/1/15',Click:'42W'},
+            {title:'章莹颖案最新进展',date:'2019/1/16',Click:'37W'}
+        ]
+        new Vue({
+            el:"#ctd",
+            data:{
+                //原始数据
+                price:100,
+                newList:newList
+            },
+            computed:{
+                //newPrice为了与原始数据price区别开来，function是因为我们要在里面做事情，所以肯定要给他一个方法，然后返回新的数值
+                newPrice:function () {
+                    return this.price='￥' + this.price + '元'
+                },
+                reverseNews:function () {
+                    return this.newList = this.newList.reverse();
+                }
+            }
+        })
+    </script>
+</body>
+</html>

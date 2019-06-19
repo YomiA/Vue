@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>点击加1</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="addNum">
+        <p>{{ num }}</p>
+        <button type="button" @click="add()">ADD</button>
+    </div>
+    <script type="text/javascript">
+        var addNum = new Vue({
+            el:"#addNum",
+            data:{
+                num:1
+            },
+            methods:{
+                add:function () {
+                    this.num = this.num + 1;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

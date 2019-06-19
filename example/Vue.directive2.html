@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.directive自定义指令的生命周期(钩子函数)</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+<h1>Vue.directive自定义指令的生命周期(钩子函数)</h1>
+<div id="app">
+    <!--由之前的小例子，就是点击+1的那个小例子改装一下，使字体变红色，以下的v-chenxi是我自己定义的，内部指令是没有的，所以我们要定义v-chenxi-->
+    <div v-chenxi="color">{{ num }}</div>
+    <p>
+        <button v-on:click="add()">ADD</button>
+        <button v-on:click="del">Delete</button>
+    </p>
+</div>
+<p>
+    <!--因为已经解绑了，所以就跟vue没关系了，所以点击事件就用js原生的函数和在定义域外面定义一个按钮-->
+    <button onclick="unbind()">解绑</button>
+</p>
+<script type="text/javascript">
+    // 我们自己用最原生办法写一个函数：
+    function unbind() {
+        // 也就是把vue的Dir销毁了
+        Dir.$destroy();
+    }
+
+    // directive后面有两个参数，一个是我们自定义的不带v-的，一个是对象{}(这个对象里面就有这些生命周期钩子函数的操作)
+    Vue.directive("chenxi",{
+        bind:function (el,binding) {//只调用一次，并在初始化的时候进行
+        console.log("1 - bind");
+        //解绑之后点击就没有效果了
+        el.style = "color:"+binding.value;
+    },
+    inserted:function(){//插入完之后再调用
+        console.log("2 - inserted")
+    },
+    update:function(){//更新数据时调用
+        console.log("3 - update")
+    },
+    componentUpdated:function(){//更新完成时调用
+        console.log("4 - componentUpdated")
+    },
+    unbind:function(){//解绑时调用
+        console.log("5 - unbind")
+    }
+    })
+    //el.style = "color:"+binding.value;
+    var Dir = new Vue({
+        el:'#app',
+        data:{
+            num:10,
+            color:"red"
+        },
+        methods:{
+            add:function () {
+                this.num++;
+            },
+            del:function () {
+                this.num--;
+            }
+        }
+
+    })
+</script>
+</body>
+</html>

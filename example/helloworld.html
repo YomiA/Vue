@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HelloWorld</title>
+    <!--引入js文件-->
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div>This is my first vue</div>
+    <hr />
+    <div id="firstVue">{{message}}</div>
+    <script type="text/javascript">
+        // 实例化对象
+        new Vue({//放的是对象（后面一整个都是对象）
+            //el后面的元素要跟div上的对上
+            el:'#firstVue',
+            //data放参数的，也是一个对象
+            data:{
+                message:'Hello World!'
+            }
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>mixinsDemo</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+<!--Mixins一般有两种用途：-->
+
+<!--1、在你已经写好了构造器后，需要增加方法或者临时的活动时使用的方法，这时用混入会减少源代码的污染。-->
+<!--2、很多地方都会用到的公用方法，用混入的方法可以减少代码量，实现代码重用。-->
+
+    <div id="mxd">
+        <p>{{ num }}</p>
+        <button @click="add">Add</button>
+    </div>
+    <script type="text/javascript">
+        //先声明一个对象，是对象,然后把这个对象引入到mixins中
+        var addConsole = {
+            updated:function () {
+                console.log("数据发生变化，变化大小为"+this.num)
+            }
+        };
+
+        //当我们有公用的方法的时候，需要用到一个全局API的混入方式，全局API都是用大写的Vue开头的
+        //Vue.mixin这个里面是没有s的，mixin括号里面的是对象，对象里面放方法
+        Vue.mixin({
+            updated:function () {
+                console.log("我是全局API的混入方式")
+            }
+        })
+
+
+        var mxd = new Vue({
+            el:"#mxd",
+            data:{
+                num:1
+            },
+            methods:{
+                add:function () {
+                    this.num = this.num + 1
+                },
+            },
+            updated:function () {
+                console.log("这是Vue中原生的更新")
+            },
+            //混入这边添加的是数组形式，我们可以混入多个需求
+            //在Vue中都是混入(混入中又以全局API的混入的先执行)的先执行，原生的后执行
+            mixins:[addConsole]
+        })
+    </script>
+</body>
+</html>

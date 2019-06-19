@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-text & v-html 实例</title>
+    <script type="text/javascript" src="/assets/js/vue.js"></script>
+</head>
+<body>
+    <h1>v-text & v-html 实例</h1>
+    <hr />
+    <div id="forthVue">
+        <span>{{msg}}</span>
+        <hr />
+        <span v-text="message"></span>
+        <hr />
+        <span v-html="msg_html"></span>
+    </div>
+    <script type="text/javascript">
+        var forthVue = new Vue({
+            el:'#forthVue',
+            data:{
+                msg:'normal {{}}',
+                message:'v-text effect',
+                msg_html:'<h5><b>v-html effect<b></h5>'
+            }
+        })
+    </script>
+</body>
+</html>
