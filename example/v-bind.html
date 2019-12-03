@@ -14,6 +14,9 @@
     <p>这是正常的路径:<img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=2895986097,3609514076&fm=173&app=25&f=JPEG?w=600&h=400&s=DBACB7475B8662D2062E5B6D0300E068" width="100px" /></p>
     <p>这是v-bind的路径:<img v-bind:src="imgSrc" width="100px" /></p>
     <a v-bind:href="aHref" target="_blank">百度一下，你就知道</a>
+    <br>
+    <input type="button" value="按钮" title="mytitle">
+    <input type="button" value="有bind的按钮" v-bind:title="mytitle">
     <hr />
     <h3>2、绑定class</h3>
     <div :class="className">学习使我快乐</div>
@@ -43,6 +46,9 @@
     <hr />
     <h3>8、对象绑定div中的style</h3>
     <div :style="styleObject">采菊东篱下</div>
+    <h3>9、v-bind中可以写一些合法的js表达式</h3>
+    <input type="button" value="有bind的按钮" v-bind:title="mytitle">
+    <input type="button" value="有bind的按钮" v-bind:title="mytitle+'这是一个合法的表达式'">
 </div>
 
 <style>
@@ -74,6 +80,7 @@
             isAB:true,
             red:'blue',
             font:'50px',
+            mytitle:'这是我的一个title显示',
             styleObject:{
                 color:'purple',
                 //这里不能用font-size，因为vue中不允许用这个格式，只能改成驼峰式
