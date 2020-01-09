@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>跑马灯效果</title>
+<!--    1、导入vue包-->
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+<!--2、创建一个要控制的区域-->
+<div id="app">
+    <input type="button" value="浪起来" @click="lang"/>
+    <input type="button" value="低调" @click="stop"/>
+    <h1>{{ msg }}</h1>
+</div>
+
+<script>
+    var vue = new Vue({
+        el:'#app',
+        data:{
+            msg:'风会指引你前进的方向~~风振，',
+            intervalId:null //在data中定义定时器ia，这样在下面的方法中就可以取到这个id
+        },
+        methods: {
+            //ES6 方法
+            lang() {
+                // alert(this.msg);
+                //为了让他自己跑起来，放到一个定时器里面去
+                //=>箭头函数是ES6中的方法表示，把function去掉，然后再小括号和大括号中间加一个箭头，就可以把函数里面的this指向了
+                // 外部方法里面的this，也就是data中的数据
+                //每次点击一次按钮，就会产生一个id，然后把这个id赋值给定时器id保存起来
+                if (this.intervalId != null) {
+                    return;
+                } else {
+                    this.intervalId = setInterval(() => {
+                        //截取字符串的操作
+                        //1、截取字符串的第一个字符
+                        var start = this.msg.substring(0, 1);
+                        //2、截取除第一个外剩下的字符
+                        var end = this.msg.substring(1);
+                        //3、尾部和头部再拼接起来赋值给msg
+                        this.msg = end + start;
+                    }, 400)
+                }
+            },
+            stop(){//停止按钮，就是停止定时器
+                clearInterval(this.intervalId);
+                //每当按下停止按钮时，我们都要把这个定时器id置为null，这样点击开始按钮，才会有定时器为null传入
+                this.intervalId = null;
+            }
+        }
+    })
+</script>
+</body>
+</html>

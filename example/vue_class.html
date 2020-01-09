@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue中的样式-class属性</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <style>
+        .red{
+            color: red;
+        }
+
+        .thin{
+            font-weight: 200;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .active{
+            letter-spacing: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+<!--        这是正常的类属性值-->
+        <h1 class="red thin active">这是一个很大的H1，大到你无法想象。</h1>
+        <!-- 第一种使用方式，直接传递一个数组，注意：这里的class需要用v-bind做数据绑定，而且里面需要用单引号引起来-->
+        <h1 :class="['red','thin','italic']">这是一个很大的H1，大到你无法想象。</h1>
+        <!-- 第二种使用方式，在数组中使用三元表达式-->
+        <h1 :class="['red','thin','italic',flag ? 'active':'']">这是一个很大的H1，大到你无法想象。</h1>
+        <!-- 第三种使用方式，在数组中使用对象来代替三元表达式，提高代码可读性-->
+        <h1 :class="['red','thin','italic',{'active':flag}]">这是一个很大的H1，大到你无法想象。</h1>
+        <!-- 第四种使用方式，直接使用一个对象来代替数组，使用v-bind绑定一个对象，对象的属性是类名-->
+        <h1 :class="classobj">这是一个很大的H1，大到你无法想象。</h1>
+    </div>
+</body>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            flag:true,
+            //我们可以把对象直接放在data数据中，然后用一个词代替即可
+            classobj:{'red':true,'thin':true,'italic':false,'active':true},
+        },
+        methods:{}
+    })
+</script>
+</html>
