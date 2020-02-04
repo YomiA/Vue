@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>IfShow</title>
-    <script type="text/javascript" src="/assets/js/vue.js"></script>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
 </head>
 <body>
     <h1>v-if&v-else&v-show</h1>
@@ -16,6 +16,8 @@
     <script>
         //v-if： 判断是否加载，可以减轻服务器的压力，在需要时加载。为false时不加载，不访问
         //v-show：调整css dispaly属性，可以使客户端操作更加流畅。已经访问了，为false时相当于display:none,true相当于display:block
+        //如果元素涉及到频繁的切换，最好不要用v-if，推荐使用v-show
+        //如果元素可能永远也不会显示出来被用户看到，推荐使用v-if
         new Vue({
             el:'#secondVue',
             data:{
