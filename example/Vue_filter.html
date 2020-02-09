@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue的过滤器语法</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg | msgFormat('可爱','帅气','handsome') | test}}</p>
+    </div>
+    <script type="text/javascript">
+        //注意：过滤器只能用于{{}}和v-bind表达式, 过滤器就是元数据不改变，但是改变输出结果
+        // 过滤器调用的时候的格式(对name进行过滤)： {{ name | 过滤器名称 }}
+        // 过滤器的定义语法：function对传过来的数据做什么样的处理
+        // Vue.filter('过滤器的名称', function () {})
+        // 过滤器中的 function 的第一个参数已经被规定死了，永远都是 过滤器 管道符(|) 前面传递过来的数据
+        // Vue.filter('过滤器的名称', function (data) {
+        //      return data+'123'  主要输出来的就是name123
+        // })
+
+        //定义一个vue全局的过滤器，名字叫做 msgFormat
+        Vue.filter('msgFormat', function (msg,arg,arg2,arg3) {
+            //不能用replacAll,字符串的 replace 方法，第一个参数，除了可写一个字符串外，还可以定义一个正则
+            // return msg.replace(/单纯/g,"疯狂");
+            return msg.replace(/单纯/g,arg + arg2 + arg3);
+        })
+
+        //过滤器还能多个调用
+
+        Vue.filter('test',function (msg) {
+            return msg+'================'
+        });
+
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                msg:"曾经，我也是一个单纯的人，单纯的我，傻傻的问，谁是世界上最单纯的男人"
+            },
+            methods:{},
+        })
+    </script>
+</body>
+</html>
