@@ -29,7 +29,7 @@
                     搜索名称关键字：
 <!--                    获取焦点标签： autofocus="autofocus"-->
 <!--                    注意再Vue中所有的指令，再调用的时候都是以 v- 开头-->
-                    <input type="text" class="form-control" v-model="keywords" id="search">
+                    <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color>
                 </label>
 
             </div>
@@ -100,16 +100,32 @@
         //但是：在调用的时候，必须 在指令名称前面 加上 v- 前缀来进行调用
         //参数2：是一个对象，这个对象身上，有一些指令相关的函数，这些函数可以在特定的阶段，执行相关的操作
         Vue.directive('focus',{
-            bind:function () {//每当指令绑定到元素上的时候，会立即执行这个 bind 函数，只执行一次
+            //el表示，把这个绑定到哪个元素上，那么这个 el 就是指哪个元素 比如 这次绑定到 input 身上，那么这次的el就是指input元素
+            bind:function (el) {//每当指令绑定到元素上的时候，会立即执行这个 bind 函数，只执行一次
+            //注意：在每个函数中，第一个参数永远是el， 表示被绑定了指令的那个元素，这个el参数是一个原生的js对象(就是DOM对象)
+            //在元素中，刚绑定的指令的时候，还没有插入到DOM中去，这时候调用 focus 方法没有作用
+            //因为一个元素只有插入DOM中之后才能获取焦点，也就是在浏览器显示出来
+                el.focus();
+            },
+            inserted:function (el) {// inserted 表示元素 插入到 DOM 中的时候，会执行 inserted 函数 [执行一次]
+                el.focus()
+            },
+            updated:function () {// 当V-node更新的时候，会执行 updated ，可能会触发多次
 
             },
-            inserted:function () {// inserted 表示元素 插入到 DOM 中的时候，会执行 inserted 函数
+        });
+
+        Vue.directive('color',{
+            bind:function (el) {
+                el.style.color="red";
+            },
+            inserted:function () {
 
             },
             updated:function () {
 
             }
-        });
+        })
 
 
         //创建 Vue 实例，得到 ViewModel
