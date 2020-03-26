@@ -29,7 +29,9 @@
                     搜索名称关键字：
 <!--                    获取焦点标签： autofocus="autofocus"-->
 <!--                    注意再Vue中所有的指令，再调用的时候都是以 v- 开头-->
-                    <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color>
+<!--                    我们不要用默认的红色,我们来一个自定义的颜色:蓝色,如果v-color="加变量"，则说明这是一个变量而不是字符串，系统就会自己去data里面找对应的data值-->
+<!--                    所以我们要加个单引号，就是双引号里面在加个单引号，用来表示字符串-->
+                    <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color="'blue'">
                 </label>
 
             </div>
@@ -61,7 +63,7 @@
         </table>
     </div>
 
-    <div id="app2">
+    <div id="app2" v-fontweight="900" v-fontsize="'30px'">
         {{ date | dateFormat }}
     </div>
 
@@ -116,13 +118,20 @@
         });
 
         Vue.directive('color',{
+            //注意： 所有操作都是要先从内存开始然后再到页面显示出来
             //样式只要通过指令绑定给了元素，不管这个元素有没有插入到页面中去，这个元素肯定有了一个内联的样式
-            //将来元素肯定会显示到页面中去，这时候，浏览器的渲染引擎，必定会应用这个元素
+            //将来元素肯定会显示到页面中去，这时候，浏览器的渲染引擎解析样式，必定会应用这个元素
             //和样式有关的操作，可以再bind中执行
-            bind:function (el) {
-                el.style.color="red";
+            //是在内存中调用的bind
+            bind:function (el,binding) {
+                // el.style.color="red";
+                console.log(binding.name);
+                console.log(binding.value);
+                console.log(binding.expression);
+                el.style.color=binding.value;
             },
             //和js行为有关的操作，最好在inserted中执行，防止操作不生效
+            //是在页面中调用的inserted
             inserted:function () {
 
             },
@@ -251,6 +260,17 @@
 
                         return `${y}-${m}-${d} ${hh}:${mm}:${ss}=======`
                     }
+                }
+            },
+            directives:{
+                "fontweight":{//设置字体的粗细
+                    bind:function (el,binding) {
+                        el.style.fontWeight=binding.value;
+                    }
+                },
+                'fontsize':function (el,binding) {// 注意：这个 function 等同于把代码 同时写到 bind 和 updated 中去 效果同上
+                    //因为我们不知道别人传过来的参数是 30(数字) 还是 30px(字符串) 所以我们一并弄成整型的，然后再在后面加个 px
+                    el.style.fontSize = parseInt(binding.value) + 'px';
                 }
             }
         })
