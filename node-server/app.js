@@ -21,7 +21,7 @@ server.on('request', function (req, res) {
             name:'wjj',
             age:18,
             gender:'女'
-        }
+        };
         //下面的后面只接受字符串，但是data是一个对象，所以要把JSON对象给转成JSON字符串然后再传过去JSON.stringify()
         const scriptStr = `${query.callback}(${JSON.stringify(data)})`
         //服务器通过 res.end 发送给客户端，客户端去把这个 字符串 ，当作js代码去解析执行
