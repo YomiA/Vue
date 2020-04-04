@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+<!--        在客户端就可以接收服务器传过来的data值了-->
+        function showInfo123(data) {
+            console.log(data);
+        }
+    </script>
+
+<!--注意：这里传给服务器的值最好把方法名也给传过去，这样服务器才能识别页面到底是什么方法名-->
+    <script src="http://127.0.0.1:3000/getscript?callback=showInfo123"></script>
+<!--    等服务器返回数据回来的时候，这个时候上面那个就相当于下面这个-->
+<!--    <script>-->
+<!--        show();-->
+<!--    </script>-->
+
+</body>
+</html>
