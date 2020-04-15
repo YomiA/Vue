@@ -2,9 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vue简单动画演示</title>
+    <title>Vue简单动画演示(不使用动画)</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
 </head>
 <body>
-
+    <div id="app">
+        <button type="button" value="value" @click="toggle()">点击</button>
+<!--        需求：点击按钮，让h3显示，再点击按钮，让h3隐藏-->
+        <h3 v-if="flag">这是一个H3</h3>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                flag:false
+            },
+            methods:{
+                toggle(){
+                    this.flag = !this.flag
+                }
+            }
+        })
+    </script>
 </body>
 </html>
