@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义动画前缀，不使用v-</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <!--    2.自定义两组样式，来控制 transition 内部的元素实现动画-->
+    <style>
+        /* v-enter[这是一个时间点] 是进入之前，元素的起始状态， 此时元素还没开始进入 */
+        /*v-leave-to[这也是一个时间点] 是动画离开之后，离开的终止状态，此时，元素动画已经结束了*/
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(200px);
+        }
+
+
+        /*v-enter-active[入场动画的时间段]*/
+        /*v-leave-active[离场动画的时间段]*/
+        .v-enter-active,
+        .v-leave-active{
+            /*动画的过渡，时间多少毫秒，什么状态*/
+            transition: all 0.8s ease;
+        }
+
+        /* my-enter[这是一个时间点] 是进入之前，元素的起始状态， 此时元素还没开始进入 */
+        /*my-leave-to[这也是一个时间点] 是动画离开之后，离开的终止状态，此时，元素动画已经结束了*/
+        .my-enter,
+        .my-leave-to{
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+
+        /*my-enter-active[入场动画的时间段]*/
+        /*my-leave-active[离场动画的时间段]*/
+        .my-enter-active,
+        .my-leave-active{
+            /*动画的过渡，时间多少毫秒，什么状态*/
+            transition: all 0.8s ease;
+        }
+    </style>
+
+</head>
+<body>
+<div id="app">
+    <button type="button" value="value" @click="toggle()">点击显示和隐藏</button>
+    <!--    需求：点击按钮，让h3显示，再点击按钮，让h3隐藏-->
+    <!--    1.使用 transition 元素，把需要被动画控制的元素，包裹起来-->
+    <!--    transition 元素是 vue 官方提供的-->
+    <transition>
+        <h3 v-if="flag">这是一个H3</h3>
+    </transition>
+
+    <hr/>
+
+    <button type="button" value="value" @click="toggle2()">点击显示和隐藏2</button>
+    <!--    需求：点击按钮，让h3显示，再点击按钮，让h3隐藏-->
+    <!--    1.使用 transition 元素，把需要被动画控制的元素，包裹起来-->
+    <!--    transition 元素是 vue 官方提供的-->
+    <!--    name 属性是元素 transition 自定义的一个前缀，如果没有写那么默认都是 v- 共用的一个属性-->
+    <transition name="my">
+        <h1 v-if="flag2">这是一个H1</h1>
+    </transition>
+</div>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            flag:false,
+            flag2:false
+        },
+        methods:{
+            toggle(){
+                this.flag = !this.flag
+            },
+            toggle2(){
+                this.flag2 = !this.flag2
+            }
+        }
+    })
+</script>
+</body>
+</html>
