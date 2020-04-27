@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建组件的方式1</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+<!--        如果要使用组件，直接把 组件的名称 以 HTML 标签的形式，引入到页面中即可-->
+        <my-com1></my-com1>
+    </div>
+    <script>
+        // 1.1 使用Vue.extend来创建Vue的组件[extend后面跟的是一个对象]
+       // var com1 = Vue.extend({
+       //
+       //      template:"<h4>这是用 Vue.extend 方法创建的组件</h4>"// 通过 templete 属性，指定了组件要展示的HTML结构
+       //
+       //  });
+
+        //1.2 使用Vue.component('组件的名称',创建出来的组件模板对象)--->Vue.component('myCom1',com1)
+
+        //如果使用Vue.component定义全局组件的时候，组件名称使用了驼峰命名 myCom1 ,则在引用组件的时候，需要把大写的驼峰改成小写的字母
+        //同时，两个单词之间，使用“-”连接
+        //如果不使用驼峰，直接拿名称来使用即可
+
+        // Vue.component('myCom1',com1);
+
+        //以上是通过中间变量com1来连接的，接下来直接把它们俩合并起来
+
+        // Vue.conponent 第一个参数：组件的名称，将来在引用的时候，就是一个标签形式来引用它
+
+        // 第二个参数：Vue.extend 创建的组件，其中 template 就是组件将来展示的 HTML 内容
+
+        Vue.component('myCom1',Vue.extend({
+
+                 template:"<h4>这是用 Vue.extend 方法创建的组件</h4>"// 通过 templete 属性，指定了组件要展示的HTML结构
+
+             }));
+
+        //创建 Vue 实例，得到 ViewModel
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                msg:"Hello World!"
+            },
+            methods:{}
+        })
+    </script>
+</body>
+</html>
