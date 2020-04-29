@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>不同组件之间的切换动画</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(200px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.8s ease;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <a href="#" @click.prevent="log">登陆</a>
+    <a href="#" @click.prevent="res">注册</a>
+
+<!--    通过 mode 属性设置组件切换的模式-->
+    <transition mode="out-in">
+        <component :is="comName"></component>
+    </transition>
+</div>
+
+<template id="tem1">
+    <h3>这是登陆组件</h3>
+</template>
+
+<template id="tem2">
+    <h3>这是注册组件</h3>
+</template>
+
+<script>
+    // 组件之间的切换，所以首先要有俩个组件
+    Vue.component('login', {
+        template: '#tem1'
+    })
+
+    Vue.component('register', {
+        template: '#tem2'
+    })
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            comName: 'login' // 当前 component 中的 :is 绑定的组件的名称
+        },
+        methods: {
+            log() {
+                this.comName = 'login';
+            },
+            res() {
+                this.comName = 'register';
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

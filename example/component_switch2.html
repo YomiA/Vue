@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>不同组件之间的切换方法2[component :is="'组件名称'"]</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <a href="#" @click.prevent="log">登陆</a>
+    <a href="#" @click.prevent="res">注册</a>
+
+<!--    Vue提供了 component ，来展示对应名称的组件-->
+<!--    component 是一个占位符， :is 属性，可以用来指定要展示的组件的名称-->
+<!--    要展示哪个组件，就点击哪个按钮，然后把 :is后面的值赋值给那个组件的名称-->
+<!--    需要注意的是 :is 后面绑定的是一个表达式，而不是一个字符串，所以如果是字符串的时候，要给他用上单引号 ‘login’-->
+    <component :is="comName"></component>
+</div>
+
+<template id="tem1">
+    <h3>这是登陆组件</h3>
+</template>
+
+<template id="tem2">
+    <h3>这是注册组件</h3>
+</template>
+
+<script>
+    // 组件之间的切换，所以首先要有俩个组件
+    Vue.component('login',{
+        template:'#tem1'
+    })
+
+    Vue.component('register',{
+        template:'#tem2'
+    })
+
+    var vm = new Vue({
+        el:'#app',
+        data: {
+            comName:'login' // 当前 component 中的 :is 绑定的组件的名称
+        },
+        methods:{
+            log(){
+                this.comName = 'login';
+            },
+            res(){
+                this.comName = 'register';
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

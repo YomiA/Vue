@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建组件的方式3</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <mycom3></mycom3>
+    </div>
+
+<!--    在被控制的 #app 外部使用 template 元素定义组件的 HTML 模板结构-->
+    <template id="tmp">
+        <div>
+            <h1>这是通过 template 元素在外部定义的组件结构，这个方式有代码的智能提示和高亮</h1>
+            <h3>这个方式是最好的</h3>
+        </div>
+    </template>
+
+    <script>
+
+        Vue.component("mycom3",{
+            template:"#tmp"
+        })
+
+        //创建 Vue 实例，得到 ViewModel
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{}
+        })
+    </script>
+</body>
+</html>

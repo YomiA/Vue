@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建组件的方式2</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+<!--        还是使用标签的形式，引入自己的组件-->
+        <mycom2></mycom2>
+    </div>
+    <script>
+
+        Vue.component("mycom2",{//后面是一个对象自变量
+            //注意：不论哪种方式创建出来的组件，组件的 template 模板内容必须有且只有唯一的一个根元素
+            template:"<h3>这是由Vue.component直接创建的组件</h3>"
+        });
+
+        //创建 Vue 实例，得到 ViewModel
+        var vm = new Vue({
+            el:"#app",
+            data:{
+
+            },
+            methods:{}
+        })
+    </script>
+</body>
+</html>

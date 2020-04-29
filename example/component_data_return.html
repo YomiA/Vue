@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>为什么component组件中的data为什么只能是一个方法，而且返回的是一个对象</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <counter></counter>
+    <hr />
+    <counter></counter>
+    <hr />
+    <counter></counter>
+    <hr />
+</div>
+<template id="tem">
+    <div>
+        <input type="button" value="点击+1" @click="increase">
+        <p>{{ count }}</p>
+    </div>
+</template>
+<script>
+
+    // component组件如果在外面定义一个对象，然后在data中返回这个对象名，而不是直接在data中返回一个对象的话
+    // 那么就会一个对象变成全部对象的公用对象，所以是最好是在data中返回一个对象，这样就不会变成共用的
+
+    // var dataObj = {
+    //     count: 0
+    // }
+
+    Vue.component('counter', {
+        template: '#tem',
+        data: function () {
+            // return dataObj
+            return {
+                count:0
+            }
+        },
+        methods: {
+            increase() {
+                this.count = this.count + 1;
+            }
+        }
+    })
+
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {}
+    })
+</script>
+</body>
+</html>
