@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件的传值3--父组件把方法传给子组件</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <!--    父组件向子组件传递 方法 ，使用的是 事件绑定机制:v-on; 当我们自定义了一个事件属性之后，那么子组件就能够通过某些方式 来调用传递进去的这个方法了-->
+    <!--    show方法后面不能带括号，表示的是这个show方法是保存到子组件中去，要用的时候调用一下即可-->
+    <com3 v-on:func="show"></com3>
+</div>
+<template id="tmpl">
+    <div>
+        <h3>这是子组件</h3>
+        <input type="button" value="这是子组件中的按钮,点击它,触发 父组件传递过来的 func 方法" @click="myClick">
+    </div>
+</template>
+<script>
+
+    //定义了一个字面量类型的 组件模板对象
+    var com2 = {
+        template: '#tmpl',// 通过指定了一个ID，表示说要去加载这个指定ID的 template 元素中的内容，当做组件的HTML结构
+        data: function(){// 注意：data后面是一个函数，要加function
+        return {
+            sommsg: {name:"小明",age:6}
+        }
+    },
+    methods:{
+        myClick()
+        {
+            // 通过 this.$emit 点击 子组件的按钮 的时候，拿到 父组件 传递过来的 func 方法，并且调用它
+            // this.$emit('func','这是data',987)
+            this.$emit('func', this.sommsg)
+        }
+    },
+    }
+
+    // 父组件
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            datamsgformson:null,
+        },
+        methods: {
+            // 如果 父组件 传给 子组件 带参数的方法，那么只要在 子组件 调用 父组件 方法的时候(this.$emit)，在后面加参数就行
+            show(sommsg) {
+                // console.log("调用了父组件身上的 show 方法---" + data + data2)
+                // console.log(sommsg);
+                this.datamsgformson = sommsg
+            }
+        },
+        components: {
+            com3:com2
+        }
+    })
+//           方法(v-on:) 调用($emit)  数据当参数
+// 总结：父组件----->子组件----->方法----------->父组件
+
+</script>
+</body>
+</html>

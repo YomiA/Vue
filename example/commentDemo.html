@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件案例：发表评论的功能实现</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body>
+<!--思路:点击提交按钮，把评论人，评论内容的数据拿过来，组织成一个评论对象，然后放到下面的那个list里面就可以了-->
+<div id="app">
+    <!--发表评论的框-->
+    <cmt v-on:func="loadComments"></cmt>
+    <!--        发表评论的内容-->
+    <ul class="list-group">
+        <li class="list-group-item" v-for="item in list" :key="item.id">
+            <span class="badge">评论人:{{ item.name }}</span>
+            {{ item.content }}
+        </li>
+    </ul>
+</div>
+
+<template id="tmpl">
+    <div>
+        <div class="form-group">
+            <label>评论人:</label>
+            <!--v-model做下数据双向绑定-->
+            <input type="text" class="form-control" v-model="name">
+        </div>
+        <div class="form-group">
+            <label>评论内容:</label>
+            <!--v-model做下数据双向绑定-->
+            <textarea class="form-control" v-model="content"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" value="提交" @click="postComment">
+        </div>
+    </div>
+</template>
+
+<script>
+
+    var commentPost = {
+        //我们发现上面的v-model属性和v-on属性都没定义，所以我们要先定义下
+        //data(){}==>data:function(){}
+        data() {
+            return {
+                name: '',
+                content: ''
+            }
+        },
+        template: "#tmpl",
+        methods: {
+            postComment() {// 发表评论的方法
+                // 分析：发表评论的业务逻辑
+                // 1.评论数据存到哪里去？(页面的当然存到list中去)，实际是存到了 localstorage 中
+                // localstorage.setItem('键','字符串的值')
+                // 2.点击按钮的时候，先组织出一个最新的评论数据对象
+                // 3.想办法，把第二步中 得到的评论对象 保存到 localstorage 中
+                //  3.1 localstorage 只支持存放 字符串 数据，要先把对象序列化成一个 字符串 要调用 JSON.stringify
+                //  3.2 在保存最新的评论数据之前，要先从 localstorage 获取到之前的评论数据(string)转换为一个数组对象，然后把最新的评论数据 push 到这个数组里面
+                //  3.3 如果获取到的 localstorage 中的 评论字符串 为空不存在 则可以返回一个 '[]' 让 JSON.parse 去转换
+                //  3.4 把最新的评论列表数组，再次调用 JSON.stringify 转为 数组字符串，然后调用 localstorage.setItem 把它存进去
+                // 拿到一个评论对象
+                var comment = {id: Date.now(), name: this.name, content: this.content}
+                // 从 localStorage 中获取到所有的评论
+                var list = JSON.parse(localStorage.getItem('cmts') || '[]')
+                // 转成对象之后，再把 comment push 进去 最新的评论应该是在头部添加 所有应该把push 改成 unshift
+                list.unshift(comment)
+                // push 之后，然后再把它序列化之后，再存起来
+                // 重新保存最新的 评论数据
+                localStorage.setItem('cmts', JSON.stringify(list))
+                // 然后把数据清空
+                this.name = this.content = ''
+
+                this.$emit('func')
+            }
+        }
+    }
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            list: [
+                {id: Date.now(), name: '李白', content: '天生我材必有用'},
+                {id: Date.now(), name: '杜甫', content: '两个黄鹂鸣翠柳'},
+                {id: Date.now(), name: '李贺', content: '黑云压城城欲摧'},
+                {id: Date.now(), name: '白居易', content: '后宫佳丽三千人'},
+                {id: Date.now(), name: '王安石', content: '春风又绿江南岸'}
+            ]
+        },
+
+        beforeCreated() {// 这里不能调用 loadComments 方法，因为在这个钩子函数执行的时候，data 和 methods 都还没被初始化好
+
+        },
+
+        created() {
+            //如果想要访问 data 或者 methods 中的数据或者方法 都必须要用 this 来进行访问
+            // 这样每次输入新的评论数据的时候 都要手动 刷新 一次页面很麻烦，所以我们要做到点击 提交 按钮的时候，他就自动刷新页面
+            // 所以应该要再点击按钮 时候 就去调用一下 loadComments 这个方法
+            // 又因为按钮是在子组件中，而方法是在父组件中，所以想要子组件直接调用父组件是不可能的，所以父组件应该要把方法传给子组件，然后由子组件调用
+            this.loadComments();
+        },
+
+        methods: {
+            // 发表完评论之后，页面内容应该到 localStorage 中去获取，页面刚刚加载完毕，就应该拿到 localStorage 中的列表覆盖原本的假数据
+            //从本地的 localStorage 中加载评论列表
+            loadComments() {
+                var list = JSON.parse(localStorage.getItem('cmts') || '[]');
+                this.list = list
+            }
+        },
+        components: {
+            'cmt': commentPost
+        }
+    })
+</script>
+</body>
+</html>

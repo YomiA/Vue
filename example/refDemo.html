@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ref获取DOM元素和组件</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="button" value="获取元素" @click="getElement">
+    <h3 id="myh3" ref="myh3">今天又是充满希望的一天</h3>
+    <hr>
+    <chenxi ref="su"></chenxi>
+</div>
+<script>
+
+    var login = {
+        template:"<h1>登陆组件</h1>",
+        data(){
+            return{
+                msg:'my son'
+            }
+        },
+        methods:{
+            show(){
+                console.log("这是子组件的一个show()方法")
+            }
+        }
+    }
+
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {
+            getElement(){
+                // alert(document.getElementById("myh3").innerText);
+                // alert(this.$refs.myh3.innerText);
+                // console.log(this.$refs.su.msg)
+                this.$refs.su.show()
+            }
+        },
+        components: {
+            'chenxi':login
+        }
+    })
+</script>
+</body>
+</html>

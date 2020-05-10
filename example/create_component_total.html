@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建组件的方式总结</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <mylogin></mylogin>
+        <mylogin2></mylogin2>
+        <mylogin3></mylogin3>
+        <mylogin4></mylogin4>
+        <login2></login2>
+    </div>
+
+    <script>
+
+        Vue.component("mylogin",{
+            template:'<h1>我是一个可爱的标题</h1>'
+        });
+
+        var login = {
+            template:'<h2>我是一个更可爱的标题</h2>'
+        };
+
+        var login2 = {
+            template:'<h4>我是一个最最可爱的标题</h4>'
+        };
+
+        Vue.component("mylogin2",login);
+
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{},
+            components:{
+                mylogin3:{
+                    template:'<h3>我是最可爱的标题</h3>'
+                },
+                mylogin4:login,
+                login2
+            }
+        })
+    </script>
+</body>
+</html>
