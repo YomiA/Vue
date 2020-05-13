@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由 - 路由的嵌套(children)</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript" src="../assets/js/vue-router.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<template id="tmpl">
+    <div>
+        这是Account组件
+    </div>
+</template>
+
+<script>
+
+    //定义一个组件
+    var account = {
+        template:'#tmpl'
+    }
+
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {},
+        components: {}
+    })
+</script>
+</body>
+</html>
