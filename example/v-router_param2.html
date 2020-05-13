@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由 - 路由的参数传递(params)</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+<!--    1.导入vue-router.js包-->
+    <script type="text/javascript" src="../assets/js/vue-router.js"></script>
+</head>
+<body>
+    <div id="app">
+<!--        5.通过 router-view 把组件渲染到页面上去-->
+        <router-link to="/login?id=50&name=scx">登录</router-link>
+        <router-link to="/register/20/mht">注册</router-link>
+        <router-view></router-view>
+    </div>
+
+    <script>
+
+        // 2.创建俩个或者俩个以上的组件
+        var login = {
+            //这是从URL上面传参数到组件用 query
+            template:'<h1>这是登录组件 -- {{ $route.query.id }} -- {{ $route.query.name }}</h1>',
+            created(){
+                console.log(this.$route.query.id)// 50
+            }
+        };
+
+        var register = {
+            template:'<h1>这是注册组件 -- {{ $route.params.id }} -- {{ $route.params.name }}</h1>',
+            created(){
+                console.log(this.$route.params.id)// 20
+            }
+        };
+
+        //3.为组件设置路由规则
+
+        var routerObj = new VueRouter({
+
+           routes:[
+               { path:'/',redirect:'login' },
+               { path:'/login',component:login },
+               // 这是从路由规则中传递参数到 组件  用params 这里的 :id 是指在页面，也就是 URL 中你必须提供一个id和一个name
+               { path:'/register/:id/:name',component:register }
+           ]
+
+        });
+
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{},
+            components:{},
+            // 4.通过 router 把 vm 和 路由 关联起来
+            router:routerObj
+        })
+
+    </script>
+</body>
+</html>

@@ -23,11 +23,11 @@
             console.log(this.$route)
             console.log(this.$route.query.id)
         }
-    }
+    };
 
     var register = {
         template:'<h1>注册</h1>'
-    }
+    };
 
     var routerObj = new VueRouter({
 
@@ -37,7 +37,7 @@
             { path:'/register', component:register }
         ]
 
-    })
+    });
 
     var vm = new Vue({
 
