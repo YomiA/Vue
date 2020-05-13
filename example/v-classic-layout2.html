@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--    有待研究？？？？？？？？？？？？？？-->
+    <meta charset="UTF-8">
+    <title>路由 - 使用命名视图实现经典布局(子路由里面还有小布局)</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript" src="../assets/js/vue-router.js"></script>
+    <style>
+
+        html,body,h1{
+            margin: 0;
+            padding: 0;
+        }
+
+        .header{
+            background-color: orange;
+            height: 80px;
+            line-height: 80px;
+        }
+
+        .contain{
+            display: flex;
+        }
+
+        .left{
+            height: 500px;
+            background-color: lightseagreen;
+            flex: 4;
+        }
+
+        .main{
+            height: 500px;
+            background-color: lightpink;
+            flex: 6;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <!--    下面三个组件都有各自的名字了,这时候就要在容器 router-view 里面加上 name 属性 没有加就是 默认的 也就是 default-->
+    <router-view></router-view>
+    <div class="contain">
+        <router-view name="left"></router-view>
+        <router-view name="main"></router-view>
+    </div>
+
+</div>
+    <template id="tmpl">
+        <div  class="main">
+            <h1>Main主体内容组件</h1>
+            <router-view name="main1"></router-view>
+            <router-view name="main2"></router-view>
+        </div>
+    </template>
+
+<script>
+
+    var header = {
+        template:'<h1 class="header">Header头部组件</h1>'
+    };
+
+    var left = {
+        template:'<h1 class="left">Left左边栏菜单组件</h1>'
+    };
+
+    var main = {
+        template:'#tmpl'
+    };
+
+    var main1 ={
+        template:'<h1 class="main1">这是main里面的main1</h1>'
+    };
+
+    var main2 ={
+        template:'<h1 class="main1">这是main里面的main2</h1>'
+    };
+
+    var routerObj = new VueRouter({
+        routes:[
+            {
+                path:'/',
+                components:{
+                    'default':header,
+                    'left':left,
+                    'main':main
+                },
+                children:[
+                    { path:'main',components:{
+                        'main1':main1,
+                        'main2':main2
+                        }
+                    }
+                ]
+            }
+        ]
+    });
+
+    var vm = new Vue({
+        el:'#app',
+        data:{},
+        methods:{},
+        router:routerObj
+    })
+</script>
+</body>
+</html>

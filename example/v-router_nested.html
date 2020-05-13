@@ -7,26 +7,75 @@
     <script type="text/javascript" src="../assets/js/vue-router.js"></script>
 </head>
 <body>
-<div id="app"></div>
+<div id="app">
+
+    <router-link to="/account">account</router-link>
+
+    <router-view></router-view>
+
+</div>
 
 <template id="tmpl">
     <div>
-        这是Account组件
+        <h1>这是Account组件</h1>
+        <!--    这俩个是被包含在组件account组件中的，如果没有 account 组件 ，那么 登录 和 注册 组件是展现不了的-->
+        <router-link to="/account/login">登录</router-link>
+        <router-link to="/account/register">注册</router-link>
+
+<!--        在这里加一个容器它还是不起作用的,通过调试可知,如果给 父路由 设置一个子路由属性(children)，那么这个是生效的-->
+        <router-view></router-view>
     </div>
+
 </template>
 
 <script>
 
     //定义一个组件
     var account = {
-        template:'#tmpl'
+        template: '#tmpl'
     }
+
+    var login = {
+        template:'<h3>这是account中的登录组件</h3>'
+    }
+
+    var register = {
+        template:'<h3>这是account中的注册组件</h3>'
+    }
+
+    //定义一个路由规则
+    var routerObj = new VueRouter({
+
+        routes: [
+            // 正常的话，我们应该根目录啥都没有，然后点击 account ，应该展示的是 /account 目录
+            // 然后点击登录，URL 就应该显示的是 /account/login
+            // 而不是点击登录显示的 URL 是 /login
+            // 经过这样/account/这样一改， URL 是显示正确了 但是内容显示不对，因为登录和注册是属于account的
+            // 所以点击登录或者注册的时候，account的内容应该也要在的，然而却没有
+            // {path: '/account', component: account},{path:'/account/login',component:login},看出login和account是平级的
+            // 但是其实 account 是包含 login 和 register 的，也就是说 登录 和 注册 是 account 的子路由(children)
+            {
+                path: '/account',
+                component: account,
+                // children 属性是子路由的意思
+                children:[
+                    // 注意：子路由里面的 path 后面不要加 / ，否则永远以根路径开始请求，这样不方便用户去理解URL地址
+                    { path:'login',component:login },// 如果这里加 / 的话，那么组件那边就要改成/login 而不是 /account/login
+                    { path:'register',component:register }
+                ]
+            }
+            // {path:'/account/login',component:login},
+            // {path:'/account/register',component:register},
+
+        ]
+    })
 
     var vm = new Vue({
         el: '#app',
         data: {},
         methods: {},
-        components: {}
+        components: {},
+        router: routerObj
     })
 </script>
 </body>

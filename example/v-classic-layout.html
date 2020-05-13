@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>路由 - 使用命名视图实现经典布局</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript" src="../assets/js/vue-router.js"></script>
+    <style>
+
+        html,body,h1{
+            margin: 0;
+            padding: 0;
+        }
+
+        .header{
+            background-color: orange;
+            height: 80px;
+            line-height: 80px;
+        }
+
+        .contain{
+            display: flex;
+        }
+
+        .left{
+            height: 500px;
+            background-color: lightseagreen;
+            flex: 4;
+        }
+
+        .main{
+            height: 500px;
+            background-color: lightpink;
+            flex: 6;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+<!--    下面三个组件都有各自的名字了,这时候就要在容器 router-view 里面加上 name 属性 没有加就是 默认的 也就是 default-->
+    <router-view></router-view>
+    <div class="contain">
+        <router-view name="left"></router-view>
+        <router-view name="main"></router-view>
+    </div>
+</div>
+
+<script>
+
+    var header = {
+      template:'<h1 class="header">Header头部组件</h1>'
+    };
+
+    var left = {
+        template:'<h1 class="left">Left左边栏菜单组件</h1>'
+    };
+
+    var main = {
+        template:'<h1 class="main">Main主体内容组件</h1>'
+    };
+
+    var routerObj = new VueRouter({
+        routes:[
+            // 这样写是不行的，三个视图都是一样的，而我们想要的是上面头部，下面分为左边栏和主体内容这样
+            // { path:'/',component:header },
+            // { path:'/left',component:left },
+            // { path:'/main',component:main }
+
+            // 所以这时候，URL就一个，也就是路由就一个，但是组件有三个，而且是不同的，所以要用到components
+            { path:'/',components:{
+                    'default':header,
+                    'left':left,
+                    'main':main
+                }
+            }
+        ]
+    });
+
+    var vm = new Vue({
+        el:'#app',
+        data:{},
+        methods:{},
+        router:routerObj
+    })
+
+
+</script>
+</body>
+</html>
