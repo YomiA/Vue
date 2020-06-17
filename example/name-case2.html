@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>名称案例(watch)</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="firstname" placeholder="firstname">+
+        <input type="text" v-model="lastname" placeholder="lastname">=
+        <input type="text" v-model="fullname" placeholder="fullname">
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                firstname:'',
+                lastname:'',
+                fullname:''
+            },
+            methods:{},
+            watch:{
+                firstname:function () {
+                    this.fullname = this.firstname + "-" + this.lastname
+                },
+                lastname:function (newVal,oldVal) {
+                    this.fullname = this.firstname + "-" + newVal
+                }
+            }
+        })
+    </script>
+</body>
+</html>

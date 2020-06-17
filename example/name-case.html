@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>名称案例(@keyup)</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+<!--        分析：-->
+<!--        1.我们要监听到文本框的数据改变，这样才知道什么时候拼接处一个fullname-->
+<!--        2.我们应该怎么监听到文本框数据的改变呢-->
+        <input type="text" v-model="firstname" placeholder="firstname" @keyup="getFullName">+
+        <input type="text" v-model="lastname" placeholder="lastname" @keyup="getFullName">=
+        <input type="text" v-model="fullname" placeholder="fullname">
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                firstname:'',
+                lastname:'',
+                fullname:''
+            },
+            methods:{
+                getFullName(){
+                    this.fullname = this.firstname + '-' + this.lastname
+                }
+            }
+        })
+    </script>
+</body>
+</html>

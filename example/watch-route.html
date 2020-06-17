@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用watch监听路由的变化，watch比较适合监听那种非DOM元素的改变</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript" src="../assets/js/vue-router.js"></script>
+</head>
+<body>
+<div id="app">
+    <router-link to="/login">登录</router-link>
+    <router-link to="/register">注册</router-link>
+    <router-view></router-view>
+</div>
+<script>
+
+    var login = {
+        template: '<h3>点击登录按钮进行登录</h3>'
+    };
+
+    var register = {
+        template: '<h3>点击注册按钮进行注册</h3>'
+    };
+
+    var routerObj = new VueRouter({
+        routes: [
+            {path: '/', redirect: 'login'},
+            {path: '/login', component: login},
+            {path: '/register', component: register}
+        ]
+    })
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {},
+        methods: {},
+        components: {},
+        router: routerObj,
+        watch: {//在路由里面我们如果要监听 URL 所以我们直接监听 this.$route.path就行
+            '$route.path': function (newVal,oldVal) {//监听$route.path的改变，做相关处理
+                // console.log(newVal + '---' + oldVal)
+                if (newVal =='/login'){
+                    alert("欢迎进入登录界面")
+                }else if (newVal == '/register'){
+                    alert("欢迎进入注册界面")
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

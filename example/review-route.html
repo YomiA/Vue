@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件 - 路由复习</title>
+    <script type="text/javascript" src="../assets/js/vue.js"></script>
+    <script type="text/javascript" src="../assets/js/vue-router.js"></script>
+</head>
+<body>
+    <div id="app">
+        <router-view></router-view>
+        <router-link to="/login">登录</router-link>
+        <router-link to="/register">注册</router-link>
+    </div>
+    <script>
+
+        var login={
+            template:'<h3>这是登陆组件</h3>'
+        };
+
+        var register = {
+            template:'<h2>这是注册组件</h2>'
+        };
+
+        var routeObj = new VueRouter({
+            routes:[
+                {path:'/',redirect:'login'},
+                {path:'/login',component:login},
+                {path:'/register',component:register}
+            ]
+        });
+
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{},
+            components:{},
+            router:routeObj
+        })
+    </script>
+</body>
+</html>
